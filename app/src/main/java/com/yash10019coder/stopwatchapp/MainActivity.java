@@ -22,14 +22,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if(savedInstanceState!=null){
             seconds = savedInstanceState.getLong("seconds");
-//            isStopWatchRunning = savedInstanceState.getBoolean("bool");
-            wasStopWatchRunning=savedInstanceState.getBoolean("bool2");
-            Log.i("TAG", "onCreate: Bundle savedInstanceState seconds "+seconds);
-//            Log.i("TAG", "onCreate: Bundle savedInstanceState isStopWatchRunning "+isStopWatchRunning);
-            Log.i("TAG", "onCreate: Bundle savedInstanceState wasStopWatchRunning "+wasStopWatchRunning);
-
+            isStopWatchRunning = savedInstanceState.getBoolean("bool");
         }
         setContentView(R.layout.activity_main);
+        runStopwatch();
         textView = findViewById(R.id.textView);
         start = findViewById(R.id.button);
         stop = findViewById(R.id.button2);
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 textView.setText(secondToReadabelTime(seconds));
-                Log.i("TAG", "run: running "+textView.getText());
+//                Log.i("TAG", "run: running "+textView.getText());
                 if(isStopWatchRunning)
                 seconds++;
                 handler.postDelayed(this, 1);
@@ -57,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isStopWatchRunning==false) {
+//                if (isStopWatchRunning==false) {
                     isStopWatchRunning = true;
-                    runStopwatch();
-                }
+//                }
             }
         });
         stop.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 if(wasStopWatchRunning==true) {
                     isStopWatchRunning = true;
                     wasStopWatchRunning=false;
-//                    runStopwatch();
+////                    runStopwatch();
                 }
             }
         });
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isStopWatchRunning = false;
-                wasStopWatchRunning=false;
+//                wasStopWatchRunning=false;
                 seconds = 0;
                 textView.setText(secondToReadabelTime(seconds));
             }
@@ -104,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (isStopWatchRunning)
-        {
+//        if (isStopWatchRunning)
+//        {
             isStopWatchRunning=false;
             wasStopWatchRunning=true;
-        }
+//        }
     }
 
     @Override
@@ -116,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         if(wasStopWatchRunning)
             isStopWatchRunning=true;
+        wasStopWatchRunning=false;
     }
 
 //    @Override
@@ -133,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong("seconds",seconds);
-//        outState.putBoolean("bool",isStopWatchRunning);
+        outState.putBoolean("bool",isStopWatchRunning);
         outState.putBoolean("bool2",wasStopWatchRunning);
     }
 
