@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState!=null){
             seconds = savedInstanceState.getLong("seconds");
             isStopWatchRunning = savedInstanceState.getBoolean("bool");
+            wasStopWatchRunning=savedInstanceState.getBoolean("bool2");
+            if (wasStopWatchRunning)
+            {
+                isStopWatchRunning=true;
+                wasStopWatchRunning=false;
+            }
         }
         setContentView(R.layout.activity_main);
         runStopwatch();
@@ -109,12 +115,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(wasStopWatchRunning)
-            isStopWatchRunning=true;
-        wasStopWatchRunning=false;
+        if(isStopWatchRunning)
+            isStopWatchRunning=false;
+        wasStopWatchRunning=true;
     }
 
-//    @Override
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (wasStopWatchRunning)
+        {
+            isStopWatchRunning=true;
+            wasStopWatchRunning=false;
+        }
+    }
+    //    @Override
 //    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
 //        super.onRestoreInstanceState(savedInstanceState);
 //        seconds=savedInstanceState.getLong("seconds");
