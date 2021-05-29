@@ -142,10 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putLong("seconds",seconds);
         outState.putBoolean("bool",isStopWatchRunning);
         outState.putBoolean("bool2",wasStopWatchRunning);
+        super.onSaveInstanceState(outState);
     }
 
 
